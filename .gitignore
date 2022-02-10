@@ -1,3 +1,5 @@
 config.core.php
 .idea/
 core/components/commerce_itemoptions/vendor/
+_packages/*/
+
