@@ -1,5 +1,5 @@
-ItemOptions for Commerce 1.0.0-rc1
+ItemOptions for Commerce 1.0.0-pl
 ---------------------------------
-Released on
+Released on 2022-04-08
 
 - First release
