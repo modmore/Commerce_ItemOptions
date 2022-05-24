@@ -88,6 +88,10 @@ class ItemOptions extends BaseModule {
                 'show_on_order' => true,
             ]);
 
+            $adjustment->setProperty('itemopt_product', [
+                'product_id' => $product->get('id'),
+                'sku' => $product->getSku()
+            ]);
             $item->addPriceAdjustment($adjustment);
         }
 
