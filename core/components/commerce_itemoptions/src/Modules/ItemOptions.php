@@ -57,8 +57,6 @@ class ItemOptions extends BaseModule {
         $item = $event->getItem();
         $keys = $this->getAllowedKeys();
         
-        $skuList = array($item->getProduct()->getSku());
-
         foreach ($keys as $key) {
             $val = (int)$event->getOption($key);
             if (empty($val)) {
@@ -72,7 +70,6 @@ class ItemOptions extends BaseModule {
                 continue;
             }
 
-            $skuList[] = $product->getSku();
             $name = $product->getName();
             $price = $product->getPricing($this->commerce->currency)->getPriceForItem($item)->getInteger();
             $quantity = max(1, (int)$event->getOption($key . '_quantity', 1));
@@ -97,7 +94,6 @@ class ItemOptions extends BaseModule {
             ]);
             $item->addPriceAdjustment($adjustment);
         }
-        $item->setProperty('item_childsku', join("-", $skuList));
     }
 
     public function getModuleConfiguration(\comModule $module): array
