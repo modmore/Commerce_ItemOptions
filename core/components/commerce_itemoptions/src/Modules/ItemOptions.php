@@ -56,7 +56,7 @@ class ItemOptions extends BaseModule {
     {
         $item = $event->getItem();
         $keys = $this->getAllowedKeys();
-
+        
         foreach ($keys as $key) {
             $val = (int)$event->getOption($key);
             if (empty($val)) {
@@ -88,9 +88,12 @@ class ItemOptions extends BaseModule {
                 'show_on_order' => true,
             ]);
 
+            $adjustment->setProperty('itemopt_product', [
+                'product_id' => $product->get('id'),
+                'sku' => $product->getSku()
+            ]);
             $item->addPriceAdjustment($adjustment);
         }
-
     }
 
     public function getModuleConfiguration(\comModule $module): array
