@@ -1,3 +1,9 @@
+ItemOptions for Commerce 1.1.0-pl
+---------------------------------
+Released on 2022-08-22
+
+- Now stores the product_id and sku on the item adjustments. Access with {{ adjustment.properties.itemopt_product.product_id }} and {{ adjustment.properties.itemopt_product.sku }}. Thanks to @ankurvr for your contribution.
+
 ItemOptions for Commerce 1.0.0-pl
 ---------------------------------
 Released on 2022-04-08
