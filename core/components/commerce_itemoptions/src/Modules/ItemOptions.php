@@ -10,7 +10,7 @@ use modmore\Commerce\Events\Admin\PageEvent;
 use modmore\Commerce\Events\Cart\Item;
 use modmore\Commerce\Modules\BaseModule;
 use modX;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use modmore\Commerce\Dispatcher\EventDispatcher;
 
 require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 
@@ -56,7 +56,7 @@ class ItemOptions extends BaseModule {
     {
         $item = $event->getItem();
         $keys = $this->getAllowedKeys();
-        
+
         foreach ($keys as $key) {
             $val = (int)$event->getOption($key);
             if (empty($val)) {
