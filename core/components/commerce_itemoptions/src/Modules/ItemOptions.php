@@ -8,6 +8,7 @@ use modmore\Commerce\Admin\Sections\SimpleSection;
 use modmore\Commerce\Admin\Widgets\Form\TextField;
 use modmore\Commerce\Events\Admin\PageEvent;
 use modmore\Commerce\Events\Cart\Item;
+use modmore\Commerce\Events\OrderItemInResponse;
 use modmore\Commerce\Modules\BaseModule;
 use modX;
 use modmore\Commerce\Dispatcher\EventDispatcher;
@@ -47,6 +48,9 @@ class ItemOptions extends BaseModule {
 //        $this->commerce->view()->addTemplatesPath($root . '/templates/');
 
         $dispatcher->addListener(\Commerce::EVENT_ITEM_ADDED_TO_CART, [$this, 'onAddToCart']);
+        if (defined(\Commerce::class . '::EVENT_RESPONSE_ORDER_ITEM')) {
+            $dispatcher->addListener(\Commerce::EVENT_RESPONSE_ORDER_ITEM, [$this, 'onOrderItemInResponse']);
+        }
 
         // Add composer libraries to the about section (v0.12+)
         $dispatcher->addListener(\Commerce::EVENT_DASHBOARD_LOAD_ABOUT, [$this, 'addLibrariesToAbout']);
@@ -93,6 +97,34 @@ class ItemOptions extends BaseModule {
                 'sku' => $product->getSku()
             ]);
             $item->addPriceAdjustment($adjustment);
+        }
+    }
+
+    public function onOrderItemInResponse(OrderItemInResponse $event): void
+    {
+        $item = $event->getItem();
+        $allowedKeys = $this->getAllowedKeys();
+        if (count($allowedKeys) === 0) {
+            return;
+        }
+
+        foreach ($item->getPriceAdjustments('comOrderItemAdjustment') as $adjustment) {
+            $key = (string)$adjustment->get('key');
+            if (strpos($key, 'itemopt_') !== 0) {
+                continue;
+            }
+
+            $optionKey = substr($key, 8);
+            if (!in_array($optionKey, $allowedKeys, true)) {
+                continue;
+            }
+
+            $event->setProperty($optionKey, [
+                'name' => $adjustment->get('name'),
+                'total_change' => $adjustment->get('total_change'),
+                'total_change_formatted' => $adjustment->get('total_change_formatted'),
+                'product' => $adjustment->getProperty('itemopt_product'),
+            ]);
         }
     }
 
