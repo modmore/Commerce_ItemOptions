@@ -80,7 +80,7 @@ switch($options[xPDOTransport::PACKAGE_ACTION]) {
         }
 
         if (!checkVersion('PHP', PHP_VERSION, [
-            '2019-07-01 12:00:00' => '7.2.5',
+            '2019-07-01 12:00:00' => '7.4',
         ], $modx)) {
             $success = false;
         }
@@ -110,7 +110,7 @@ switch($options[xPDOTransport::PACKAGE_ACTION]) {
             // Check for EOL PHP versions
             $modx->log(xPDO::LOG_LEVEL_INFO, 'Checking (optional) recommended versions...');
             checkVersion('PHP', PHP_VERSION, [
-                '2021-12-06 12:00:00' => '7.4',
+                '2021-12-06 12:00:00' => '8.1',
             ], $modx);
         }
         else {

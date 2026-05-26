@@ -1,3 +1,10 @@
+ItemOptions for Commerce 1.2.0-pl
+---------------------------------
+Released on 2022-08-22
+
+- Support Commerce 1.11's event to make selected values available in AJAX cart/checkout requests
+- Bump minimum PHP requirement to 7.4
+
 ItemOptions for Commerce 1.1.0-pl
 ---------------------------------
 Released on 2022-08-22
